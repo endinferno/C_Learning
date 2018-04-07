@@ -1,3 +1,3 @@
 # C_Learning
-<strong>The repository is used for C-language learning.</strong>
+<p><strong>The repository is used for C-language learning.</strong></p>
 ###Large Integer Subtraction
