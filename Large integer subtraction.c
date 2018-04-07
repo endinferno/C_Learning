@@ -3,10 +3,58 @@
 #include <string.h>
 #include <stdbool.h>
 
+void arrayInit();
+void arrayReverse();
+void adjustFormat();
+void getNum1AndNum2();
+int isNum1BiggerThanNum2();
+int getNumOfZero();
+bool hasNegativeLeft();
+void process();
+void getSubOfDigit();
+void getResult();
 
 char strNum1[100];
 char strNum2[100];
 int num[100];
+
+int main()
+{
+	arrayInit();
+	getNum1AndNum2();
+	int res = isNum1BiggerThanNum2();
+	arrayReverse();
+	switch (res)
+	{
+	case -1:
+	{
+		printf("0");
+		break;
+	}
+	case 1:
+	{
+		getResult(1);
+		int i;
+		for (i = 100 - getNumOfZero() - 1; i >= 0; i--)
+		{
+			printf("%d", num[i]);
+		}
+		break;
+	}
+	case 0:
+	{
+		getResult(0);
+		printf("-");
+		int i;
+		for (i = 100 - getNumOfZero() - 1; i >= 0; i--)
+		{
+			printf("%d", num[i]);
+		}
+	}
+	}
+	return 0;
+}
+
 
 void arrayInit()
 {
@@ -187,41 +235,4 @@ void getResult(int param)
 {
 	getSubOfDigit(param);
 	process();
-}
-
-int main()
-{
-	arrayInit();
-	getNum1AndNum2();
-	int res = isNum1BiggerThanNum2();
-	arrayReverse();
-	switch (res)
-	{
-	case -1:
-	{
-		printf("0");
-		break;
-	}
-	case 1:
-	{
-		getResult(1);
-		int i;
-		for (i = 100 - getNumOfZero() - 1; i >= 0; i--)
-		{
-			printf("%d", num[i]);
-		}
-		break;
-	}
-	case 0:
-	{
-		getResult(0);
-		printf("-");
-		int i;
-		for (i = 100 - getNumOfZero() - 1; i >= 0; i--)
-		{
-			printf("%d", num[i]);
-		}
-	}
-	}
-	return 0;
 }
