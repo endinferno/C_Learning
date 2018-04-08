@@ -1,9 +1,11 @@
 /*
  * @Author: endinferno.DataStructure 
- * @Date: 2018-04-08 17:18:52 
- * @Last Modified by:   endinferno.DataStructure 
- * @Last Modified time: 2018-04-08 17:18:52 
+ * @Description: Linear List
+ * @Date: 2018-04-08 18:43:42 
+ * @Last Modified by: endinferno.DataStructure
+ * @Last Modified time: 2018-04-08 18:44:05
  */
+
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -94,5 +96,5 @@ void ListDelete(SqList *L, Location i, ElemType *e)
 
 size_t ListLength(SqList L)
 {
-    
+    return L.length;
 }
