@@ -7,6 +7,6 @@
 ## Link Stack
 
 ### The usage of Stack
-    Recursion：
-        Fibonacci sequence -> FibonacciSq.c
-        
+    **Recursion**：
+        Fibonacci sequence -> *FibonacciSq.c*
+        Arithmetic         -> *Arithmetic.c*
