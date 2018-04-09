@@ -22,6 +22,7 @@ void ListInsert(LinkList *L, int i, ElemType e);
 void ListDelete(LinkList *L, int i, ElemType *e);
 void CreateListHead(LinkList *L, int n);
 void CreateListTail(LinkList *L, int n);
+void ClearList(LinkList *L);
 
 void GetElem(LinkList L, int i, ElemType *e)
 {
@@ -115,3 +116,15 @@ void CreateListTail(LinkList *L, int n)
     r->next = NULL;
 }
 
+void ClearList(LinkList *L)
+{
+    LinkList p,q;
+    p  =(*L)->next;
+    while(p)
+    {
+        q = p->next;
+        free(p);
+        p =q;
+    }
+    (*L)->next = NULL;
+}
