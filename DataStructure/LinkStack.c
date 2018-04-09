@@ -3,7 +3,7 @@
  * @Description: LinkStack
  * @Date: 2018-04-09 22:31:37 
  * @Last Modified by: endinferno.DataStructure
- * @Last Modified time: 2018-04-09 22:43:48
+ * @Last Modified time: 2018-04-09 22:45:16
  */
 
 #include <stdio.h>
@@ -22,7 +22,7 @@ typedef struct LinkStack
     int count;
 } LinkStack;
 
-bool Pus((LinkStack * S, SElemType e));
+bool Pus(LinkStack * S, SElemType e);
 bool Pop(LinkStack *S, SElemType *e);
 
 bool Push(LinkStack *S, SElemType e)
