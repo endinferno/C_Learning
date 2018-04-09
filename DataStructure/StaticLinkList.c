@@ -1,3 +1,12 @@
+/*
+ * @Author: endinferno.DataStructure 
+ * @Description: StaticLinkList
+ * @Date: 2018-04-09 22:09:54 
+ * @Last Modified by: endinferno.DataStructure 
+ * @Last Modified time: 2018-04-09 22:09:54 
+ */
+
+
 #include <stdio.h>
 
 #define MAXSIZE 1000
