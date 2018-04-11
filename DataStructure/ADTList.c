@@ -3,9 +3,8 @@
  * @Description: Linear List
  * @Date: 2018-04-08 18:43:42 
  * @Last Modified by: endinferno.DataStructure
- * @Last Modified time: 2018-04-08 18:44:05
+ * @Last Modified time: 2018-04-12 00:06:26
  */
-
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -47,7 +46,7 @@ void GetElem(SqList L, Location i, ElemType *e)
 {
     if (i > L.length || i < 1)
     {
-        printf("Error: Out of limit.\n");
+        fprintf(stderr, "Error: Out of limit.\n");
         return;
     }
     *e = L.data[i - 1];
@@ -69,7 +68,7 @@ void ListInsert(SqList *L, Location i, ElemType e)
 {
     if (i > L->length || i < 1)
     {
-        printf("Error: Out of limit.\n");
+        fprintf(stderr, "Error: Out of limit.\n");
         return;
     }
     for (int u = L->length; u >= i; u--)
@@ -84,7 +83,7 @@ void ListDelete(SqList *L, Location i, ElemType *e)
 {
     if (i > L->length || i < 1)
     {
-        printf("Error: Out of limit.\n");
+        fprintf(stderr, "Error: Out of limit.\n");
         return;
     }
     *e = L->data[i - 1];

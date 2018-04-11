@@ -2,10 +2,9 @@
  * @Author: endinferno.DataStructure 
  * @Description: StaticLinkList
  * @Date: 2018-04-09 22:09:54 
- * @Last Modified by: endinferno.DataStructure 
- * @Last Modified time: 2018-04-09 22:09:54 
+ * @Last Modified by: endinferno.DataStructure
+ * @Last Modified time: 2018-04-12 00:14:44
  */
-
 
 #include <stdio.h>
 
@@ -36,7 +35,6 @@ void InitList(StaticLinkList space)
 int Malloc_SSL(StaticLinkList space)
 {
     int i = space[0].cur;
-
     if (space[0].cur)
         space[0].cur = space[i].cur;
     return i;
@@ -48,7 +46,7 @@ void ListInsert(StaticLinkList L, int i, ElemType e)
     k = MAXSIZE - 1;
     if (i < 1 || i > ListLength(L) + 1)
     {
-        printf("Error: Out of limit.\n");
+        fprintf(stderr, "Error: Out of limit.\n");
         return;
     }
     j = Malloc_SSL(L);
@@ -87,7 +85,7 @@ void ListDelete(StaticLinkList L, int i)
     int j, k;
     if (i < 1 || i > ListLength(L))
     {
-        printf("Error: Out of limit.\n");
+        fprintf(stderr, "Error: Out of limit.\n");
         return;
     }
     k = MAXSIZE - 1;

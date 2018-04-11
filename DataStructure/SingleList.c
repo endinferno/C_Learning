@@ -3,7 +3,7 @@
  * @Description: Single List
  * @Date: 2018-04-08 19:24:10 
  * @Last Modified by: endinferno.DataStructure
- * @Last Modified time: 2018-04-08 19:26:48
+ * @Last Modified time: 2018-04-12 00:14:18
  */
 
 #include <stdio.h>
@@ -37,7 +37,7 @@ void GetElem(LinkList L, int i, ElemType *e)
     }
     if (!p || j > i)
     {
-        printf("Error: Out of limit.\n");
+        fprintf(stderr, "Error: Out of limit.\n");
         return;
     }
     *e = p->data;
@@ -56,10 +56,15 @@ void ListInsert(LinkList *L, int i, ElemType e)
     }
     if (!p || j < i)
     {
-        printf("Error: Out of limit.\n");
+        fprintf(stderr, "Error: Out of limit.\n");
         return;
     }
     s = (LinkList)malloc(sizeof(Node));
+    if (!s)
+    {
+        fprintf(stderr, "Error: Failed to Malloc Memory.\n");
+        exit(1);
+    }
     s->data = e;
     s->next = p->next;
     p->next = s;
@@ -78,7 +83,7 @@ void ListDelete(LinkList *L, int i, ElemType *e)
     }
     if (!(p->next) || j > i)
     {
-        printf("Error: Out of limit.\n");
+        fprintf(stderr, "Error: Out of limit.\n");
         return;
     }
     q = p->next;
@@ -91,6 +96,11 @@ void CreateListHead(LinkList *L, int n)
 {
     LinkList p;
     *L = (LinkList)malloc(sizeof(Node));
+    if (!(*L))
+    {
+        fprintf(stderr, "Error: Failed to Malloc Memory.\n");
+        exit(1);
+    }
     (*L)->next = NULL;
     for (int i = 0; i < n; i++)
     {
@@ -105,10 +115,20 @@ void CreateListTail(LinkList *L, int n)
 {
     LinkList p, r;
     *L = (LinkList)malloc(sizeof(Node));
+    if (!(*L))
+    {
+        fprintf(stderr, "Error: Failed to Malloc Memory.\n");
+        exit(1);
+    }
     r = *L;
     for (int i = 0; i < n; i++)
     {
-        p = (Node*)malloc(sizeof(Node));
+        p = (Node *)malloc(sizeof(Node));
+        if (!p)
+        {
+            fprintf(stderr, "Error: Failed to Malloc Meemory.\n");
+            exit(1);
+        }
         p->data = 0;
         r->next = p;
         r = p;
@@ -118,13 +138,13 @@ void CreateListTail(LinkList *L, int n)
 
 void ClearList(LinkList *L)
 {
-    LinkList p,q;
-    p  =(*L)->next;
-    while(p)
+    LinkList p, q;
+    p = (*L)->next;
+    while (p)
     {
         q = p->next;
         free(p);
-        p =q;
+        p = q;
     }
     (*L)->next = NULL;
 }

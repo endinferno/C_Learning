@@ -3,7 +3,7 @@
  * @Description: Link Queue
  * @Date: 2018-04-11 18:09:09 
  * @Last Modified by: endinferno.DataStructure
- * @Last Modified time: 2018-04-11 18:16:02
+ * @Last Modified time: 2018-04-12 00:07:37
  */
 
 #include <stdio.h>
@@ -30,7 +30,10 @@ bool EnQueue(LinkQueue *Q, QElemType e)
 {
     QueuePtr s = (QueuePtr)malloc(sizeof(QNode));
     if (!s)
+    {
+        fprintf(stderr, "Error: Failed to Malloc Memory.\n");
         exit(OVERFLOW);
+    }
     s->data = e;
     s->next = NULL;
     Q->rear->next = s;
@@ -46,8 +49,7 @@ bool DeQueue(LinkQueue *Q, QElemType *e)
     p = Q->front->next;
     *e = p->data;
     Q->front->next = p->next;
-
-    if(Q->rear == p)
+    if (Q->rear == p)
         Q->rear = Q->front;
     free(p);
     return true;
