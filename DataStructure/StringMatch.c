@@ -3,7 +3,7 @@
  * @Description: String Matching
  * @Date: 2018-04-14 11:13:33 
  * @Last Modified by: endinferno.DataStructure
- * @Last Modified time: 2018-04-14 14:04:15
+ * @Last Modified time: 2018-04-14 14:18:19
  */
 
 #include <stdio.h>
@@ -11,6 +11,7 @@
 
 int IndexSimple(char *S, char *T, int pos);
 void GetNext(char *str, int *next);
+void GetNextVal(char *T, int *nextVal);
 int IndexKMP(char *S, char *T);
 
 int IndexSimple(char *S, char *T, int pos)
@@ -36,6 +37,27 @@ int IndexSimple(char *S, char *T, int pos)
         return -1;
 }
 
+void GetNextVal(char *T, int *nextVal)
+{
+    int i = 1;
+    nextVal[1] = 0;
+    int j = 0;
+    while (i < strlen(T))
+    {
+        if (j == 0 || T[i - 1] == T[j - 1])
+        {
+            i++;
+            j++;
+            if (T[i - 1] != T[j - 1])
+                nextVal[i] = j;
+            else
+                nextVal[i] = nextVal[j];
+        }
+        else
+            j = nextVal[j];
+    }
+}
+
 void GetNext(char *T, int *next)
 {
     int i = 1;
@@ -50,16 +72,14 @@ void GetNext(char *T, int *next)
             next[i] = j;
         }
         else
-        {
             j = next[j];
-        }
     }
 }
 
 int IndexKMP(char *S, char *T)
 {
     int next[10];
-    GetNext(T, next);
+    GetNextVal(T, next);
     int i = 1;
     int j = 1;
     while (i <= strlen(S) && j <= strlen(T))
@@ -75,4 +95,11 @@ int IndexKMP(char *S, char *T)
     if (j > strlen(T))
         return i - (int)strlen(T) - 1;
     return -1;
+}
+
+int main()
+{
+    int c = IndexKMP("123234345456", "454");
+    printf("%d\n", c);
+    return 0;
 }
