@@ -1,114 +1,143 @@
 /*
- * @Author: endinferno.DataStructure 
+ * @Author: endinferno.DataStructure
  * @Description: ADTString
- * @Date: 2018-04-11 20:17:10 
+ * @Date: 2018-04-11 20:17:10
  * @Last Modified by: endinferno.DataStructure
- * @Last Modified time: 2018-04-12 00:05:39
+ * @Last Modified time: 2018-04-14 10:49:02
  */
 
 #include <stdio.h>
 #include <stdbool.h>
 #include <malloc.h>
+#include <stdlib.h>
 
-typedef struct
-{
-    char *data;
-    int length;
-} String;
+#define MAXSIZE 40
 
-bool StrAssign(String T, char *str);
-bool StrCopy(String T, String S);
+typedef int Status;
+typedef int ElemType;
+
+typedef char String[MAXSIZE + 1];
+
 int StrLength(String S);
-bool StringEmpty(String S);
 bool ClearString(String S);
-int StrCompare(String S, String T);
+bool StringEmpty(String S);
+bool StrCopy(String S, String T);
+bool StrAssign(String T, char *str);
 bool Concat(String T, String S1, String S2);
+int StrCompare(String S, String T);
+void StrPrint(String S);
+bool SubString(String Sub, String S, int pos, int len);
+bool Index(String S, String T, int *pos);
 
 bool StrAssign(String T, char *str)
 {
-    if (str == NULL)
-        return false;
     int len = 0;
     while (str[len] != '\0')
         len++;
-    T.length = len;
-    T.data = (char *)malloc(T.length * sizeof(char));
-    if (T.data == NULL)
+    T[0] = len;
+    for (int i = 1; i <= len; i++)
     {
-        fprintf(stderr, "Error: Failed to malloc memory.\n");
-        exit(1);
+        T[i] = str[i - 1];
     }
-    int i = 0;
-    while (str[i] != 0)
-        T.data[i] = str[i];
     return true;
-}
-
-int StrLength(String S)
-{
-    return S.length;
 }
 
 bool StrCopy(String T, String S)
 {
-    if (StringEmpty(S))
-        return false;
-    T.length = S.length;
-    T.data = (char *)malloc(T.length * sizeof(char));
-    if (T.data == NULL)
-    {
-        fprintf(stderr, "Error: Failed to malloc memory.\n");
-        exit(1);
-    }
-    int i = 0;
-    while (i < T.length)
-        T.data[i] = S.data[i];
+    for (int i = 0; i <= S[0]; i++)
+        T[i] = S[i];
     return true;
 }
 
 bool StringEmpty(String S)
 {
-    return 0 == S.length;
+    return 0 == S[0];
 }
 
 bool ClearString(String S)
 {
-    free(S.data);
-    S.length = 0;
+    S[0] = 0;
+    return true;
+}
+
+int StrLength(String S)
+{
+    return S[0];
 }
 
 int StrCompare(String S, String T)
 {
-    int i = 0;
-    while (i < S.length || i < T.length)
+    for (int i = 1; i <= S[0] && i <= T[0]; i++)
     {
-        if (S.data[i] > T.data[i])
+        if (S[i] > T[i])
             return 1;
-        else if (S.data[i] < T.data[i])
+        else if (S[i] < T[i])
             return -1;
         else
-            i++;
+            continue;
     }
-    return 0;
+    if (S[0] > T[0])
+        return 1;
+    else if (S[0] < T[0])
+        return -1;
+    else
+        return 0;
+}
+
+void StrPrint(String S)
+{
+    for (int i = 1; i <= S[0]; i++)
+    {
+        printf("%c", S[i]);
+    }
+    printf("\n");
 }
 
 bool Concat(String T, String S1, String S2)
 {
-    T.length = S1.length + S2.length;
-    T.data = (char *)malloc(T.length * sizeof(char));
-    if (T.data == NULL)
-    {
-        fprintf(stderr, "Error: Failed to malloc memory.\n");
-        exit(1);
-    }
-    for (int i = 0; i < S1.length; i++)
-    {
-        T.data[i] = S1.data[i];
-    }
-    for (int i = S1.length; i < T.length; i++)
-    {
-        T.data[i] = S2.data[i];
-    }
+    T[0] = S1[0] + S2[0];
+    for (int i = 1; i <= S1[0]; i++)
+        T[i] = S1[i];
+    for (int i = 1; i <= S2[0]; i++)
+        T[i + S1[0]] = S2[i];
     return true;
 }
 
+bool SubString(String Sub, String S, int pos, int len)
+{
+    if (pos < 1 || pos > StrLength(S))
+    {
+        fprintf(stderr, "Error: Out of limit.\n");
+        return false;
+    }
+    if (len < 0 || len > StrLength(S) - pos + 1)
+    {
+        fprintf(stderr, "Error: Out of limit.\n");
+        return false;
+    }
+    Sub[0] = len;
+    for (int i = 1; i <= len; i++)
+        Sub[i] = S[pos + i - 1];
+    return true;
+}
+
+bool Index(String S, String T, int *pos)
+{
+	for (int i = 1; i <= S[0] - T[0] + 1; i++)
+	{
+		int u, o = i;
+		for (u = 1; u <= T[0]; u++)
+		{
+			if (S[o] == T[u])
+				o++;
+			else
+				break;
+		}
+		if (u-1 == T[0] && S[i + u - 2] == T[u - 1])
+		{
+			*pos = i;
+			return true;
+		}
+	}
+	return false;
+}
