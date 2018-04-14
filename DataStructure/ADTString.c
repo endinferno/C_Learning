@@ -3,7 +3,7 @@
  * @Description: ADTString
  * @Date: 2018-04-11 20:17:10
  * @Last Modified by: endinferno.DataStructure
- * @Last Modified time: 2018-04-14 10:59:09
+ * @Last Modified time: 2018-04-14 11:12:08
  */
 
 #include <stdio.h>
@@ -124,6 +124,8 @@ bool SubString(String Sub, String S, int pos, int len)
 
 int Index(String S, String T, int pos)
 {
+    if (pos < 1 || StrLength(S) < StrLength(T))
+        return 0;
     for (int i = pos; i <= S[0] - T[0] + 1; i++)
     {
         int u, o = i;
@@ -135,23 +137,7 @@ int Index(String S, String T, int pos)
                 break;
         }
         if (u - 1 == T[0] && S[i + u - 2] == T[u - 1])
-        {
             return i;
-        }
     }
-    return 0;
-}
-
-bool Replace(String S, String T, String V)
-{
-    
-}
-
-int main()
-{
-    String S, T;
-    StrAssign(S, "123456789");
-    StrAssign(T, "456");
-
     return 0;
 }
