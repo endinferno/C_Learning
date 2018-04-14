@@ -3,7 +3,7 @@
  * @Description: String Matching
  * @Date: 2018-04-14 11:13:33 
  * @Last Modified by: endinferno.DataStructure
- * @Last Modified time: 2018-04-14 14:18:19
+ * @Last Modified time: 2018-04-14 14:18:48
  */
 
 #include <stdio.h>
@@ -95,11 +95,4 @@ int IndexKMP(char *S, char *T)
     if (j > strlen(T))
         return i - (int)strlen(T) - 1;
     return -1;
-}
-
-int main()
-{
-    int c = IndexKMP("123234345456", "454");
-    printf("%d\n", c);
-    return 0;
 }
