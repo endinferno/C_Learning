@@ -3,7 +3,7 @@
  * @Description: ADTString
  * @Date: 2018-04-11 20:17:10
  * @Last Modified by: endinferno.DataStructure
- * @Last Modified time: 2018-04-14 10:49:02
+ * @Last Modified time: 2018-04-14 10:59:09
  */
 
 #include <stdio.h>
@@ -27,7 +27,8 @@ bool Concat(String T, String S1, String S2);
 int StrCompare(String S, String T);
 void StrPrint(String S);
 bool SubString(String Sub, String S, int pos, int len);
-bool Index(String S, String T, int *pos);
+int Index(String S, String T, int pos);
+bool Replace(String S, String T, String V);
 
 bool StrAssign(String T, char *str)
 {
@@ -121,23 +122,36 @@ bool SubString(String Sub, String S, int pos, int len)
     return true;
 }
 
-bool Index(String S, String T, int *pos)
+int Index(String S, String T, int pos)
 {
-	for (int i = 1; i <= S[0] - T[0] + 1; i++)
-	{
-		int u, o = i;
-		for (u = 1; u <= T[0]; u++)
-		{
-			if (S[o] == T[u])
-				o++;
-			else
-				break;
-		}
-		if (u-1 == T[0] && S[i + u - 2] == T[u - 1])
-		{
-			*pos = i;
-			return true;
-		}
-	}
-	return false;
+    for (int i = pos; i <= S[0] - T[0] + 1; i++)
+    {
+        int u, o = i;
+        for (u = 1; u <= T[0]; u++)
+        {
+            if (S[o] == T[u])
+                o++;
+            else
+                break;
+        }
+        if (u - 1 == T[0] && S[i + u - 2] == T[u - 1])
+        {
+            return i;
+        }
+    }
+    return 0;
+}
+
+bool Replace(String S, String T, String V)
+{
+    
+}
+
+int main()
+{
+    String S, T;
+    StrAssign(S, "123456789");
+    StrAssign(T, "456");
+
+    return 0;
 }
