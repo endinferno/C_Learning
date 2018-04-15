@@ -3,11 +3,12 @@
  * @Description: Complete Binary Tree (Array)
  * @Date: 2018-04-15 09:19:22 
  * @Last Modified by: endinferno.DataStructure
- * @Last Modified time: 2018-04-15 09:27:45
+ * @Last Modified time: 2018-04-15 09:30:22
  */
 
 #include <stdio.h>
 #include <stdbool.h>
+#include <malloc.h>
 
 #define MAX_TREE_SIZE 100
 typedef int TElemType;
