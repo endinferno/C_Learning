@@ -3,7 +3,7 @@
  * @Description: Complete Binary Tree (Array)
  * @Date: 2018-04-15 09:19:22 
  * @Last Modified by: endinferno.DataStructure
- * @Last Modified time: 2018-04-15 09:30:22
+ * @Last Modified time: 2018-04-15 09:43:23
  */
 
 #include <stdio.h>
@@ -20,13 +20,14 @@ typedef struct
 
 bool InitTree(CBTree *T);
 bool DestroyTree(CBTree *T);
+bool TreeEmpty(CBTree *T);
 
 bool InitTree(CBTree *T)
 {
     T = (CBTree *)malloc(sizeof(CBTree));
-    if(!T)
+    if (!T)
     {
-        fprintf(stderr,"Error: Failed to Malloc Memory.\n");
+        fprintf(stderr, "Error: Failed to Malloc Memory.\n");
         return false;
     }
     T->n = 0;
@@ -43,4 +44,9 @@ bool DestroyTree(CBTree *T)
     free(T);
     T = NULL;
     return true;
+}
+
+bool TreeEmpty(CBTree *T)
+{
+    return 0 == T->n;
 }

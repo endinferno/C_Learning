@@ -3,7 +3,7 @@
  * @Description: ADT Tree (Parent)
  * @Date: 2018-04-14 23:33:45 
  * @Last Modified by: endinferno.DataStructure
- * @Last Modified time: 2018-04-15 08:58:34
+ * @Last Modified time: 2018-04-15 09:40:34
  */
 
 #include <stdio.h>
@@ -28,6 +28,7 @@ typedef struct
 
 bool InitTree(PTree *T);
 bool DestroyTree(PTree *T);
+bool TreeEmpty(PTree *T);
 
 bool InitTree(PTree *T)
 {
@@ -52,4 +53,9 @@ bool DestroyTree(PTree *T)
     free(T);
     T = NULL;
     return true;
+}
+
+bool TreeEmpty(PTree *T)
+{
+    return 0 == T->n;
 }

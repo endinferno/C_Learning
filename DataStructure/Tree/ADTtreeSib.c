@@ -3,7 +3,7 @@
  * @Description: ADT Tree (Sib)
  * @Date: 2018-04-15 08:48:18 
  * @Last Modified by: endinferno.DataStructure
- * @Last Modified time: 2018-04-15 08:59:07
+ * @Last Modified time: 2018-04-15 09:42:50
  */
 
 #include <stdio.h>
@@ -19,6 +19,7 @@ typedef struct CSNode
 
 bool InitTree(CSTree T);
 bool DestroyTree(CSTree T);
+bool TreeEmpty(CSTree T);
 
 bool InitTree(CSTree T)
 {
@@ -29,7 +30,7 @@ bool InitTree(CSTree T)
         return false;
     }
     T->rightsib = NULL;
-    T->data = 0;
+    T->firstchild = NULL;
     return true;
 }
 
@@ -43,4 +44,9 @@ bool DestroyTree(CSTree T)
     free(T);
     T = NULL;
     return true;
+}
+
+bool TreeEmpty(CSTree T)
+{
+    return T->rightsib == NULL && T->firstchild == NULL;
 }
