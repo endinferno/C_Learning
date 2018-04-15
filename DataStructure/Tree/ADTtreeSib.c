@@ -3,7 +3,7 @@
  * @Description: ADT Tree (Sib)
  * @Date: 2018-04-15 08:48:18 
  * @Last Modified by: endinferno.DataStructure
- * @Last Modified time: 2018-04-15 09:42:50
+ * @Last Modified time: 2018-04-15 09:52:22
  */
 
 #include <stdio.h>
@@ -48,5 +48,5 @@ bool DestroyTree(CSTree T)
 
 bool TreeEmpty(CSTree T)
 {
-    return T->rightsib == NULL && T->firstchild == NULL;
+    return NULL == T;
 }

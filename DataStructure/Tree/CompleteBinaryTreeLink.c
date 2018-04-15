@@ -3,7 +3,7 @@
  * @Description: Complete Binary Tree (Link)
  * @Date: 2018-04-15 09:29:31 
  * @Last Modified by: endinferno.DataStructure
- * @Last Modified time: 2018-04-15 09:44:23
+ * @Last Modified time: 2018-04-15 09:51:46
  */
 
 #include <stdio.h>
@@ -48,5 +48,5 @@ bool DestroyTree(BiTree T)
 
 bool TreeEmpty(BiTree T)
 {
-    return NULL == T->lchild && NULL == T->rchild;
+    return NULL == T;
 }
