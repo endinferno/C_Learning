@@ -3,7 +3,7 @@
  * @Description: ADT Tree (Parent)
  * @Date: 2018-04-14 23:33:45 
  * @Last Modified by: endinferno.DataStructure
- * @Last Modified time: 2018-04-15 08:23:20
+ * @Last Modified time: 2018-04-15 08:46:02
  */
 
 #include <stdio.h>
@@ -46,7 +46,7 @@ bool DestroyTree(PTree *T)
 {
     if (T == NULL)
     {
-        fprintf(stderr, "Error: Tree is not mallloced.\n");
+        fprintf(stderr, "Error: Failed to free nullptr.\n");
         return false;
     }
     free(T);
