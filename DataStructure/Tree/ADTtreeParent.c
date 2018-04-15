@@ -3,7 +3,7 @@
  * @Description: ADT Tree (Parent)
  * @Date: 2018-04-14 23:33:45 
  * @Last Modified by: endinferno.DataStructure
- * @Last Modified time: 2018-04-15 08:46:02
+ * @Last Modified time: 2018-04-15 08:58:34
  */
 
 #include <stdio.h>
@@ -44,7 +44,7 @@ bool InitTree(PTree *T)
 
 bool DestroyTree(PTree *T)
 {
-    if (T == NULL)
+    if (!T)
     {
         fprintf(stderr, "Error: Failed to free nullptr.\n");
         return false;
