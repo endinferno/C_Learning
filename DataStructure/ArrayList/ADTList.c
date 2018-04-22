@@ -3,9 +3,8 @@
  * @Description: Linear List
  * @Date: 2018-04-08 18:43:42 
  * @Last Modified by: endinferno.DataStructure
- * @Last Modified time: 2018-04-12 16:57:26
+ * @Last Modified time: 2018-04-12 19:22:26
  */
-
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -27,12 +26,14 @@ void ClearList(SqList *L);
 void CreateListFromArray(SqList *L, int *num, int len);
 void TraverseList(SqList L);
 ElemType GetElemList(SqList L, size_t order);
-size_t LocateElemList(SqList L, ElemType elem);
+size_t SearchElemList(SqList L, ElemType elem);
 void InsertElemList(SqList *L, size_t order, ElemType elem);
 ElemType ModifyElemList(SqList *L, size_t order, ElemType elem);
 ElemType DeleteElemList(SqList *L, size_t order);
 void DestroyList(SqList *L);
 SqList CopySqList(SqList L);
+SqList CatSqList(SqList L1, SqList L2);
+void DelRepeatElemList(SqList *L);
 
 void InitList(SqList *L)
 {
@@ -79,7 +80,7 @@ ElemType GetElemList(SqList L, size_t order)
     }
     return L.data[order - 1];
 }
-size_t LocateElemList(SqList L, ElemType elem)
+size_t SearchElemList(SqList L, ElemType elem)
 {
     for (int i = 0; i < L.length; i++)
     {
@@ -137,4 +138,37 @@ SqList CopySqList(SqList L)
 {
     SqList P = L;
     return P;
+}
+SqList CatSqList(SqList L1, SqList L2)
+{
+    if (L1.length + L2.length > MAXSIZE)
+    {
+        fprintf(stderr, "Error: Out of Limit.\n");
+        exit(OVERFLOW);
+    }
+    SqList dst;
+    dst.length = L1.length + L2.length;
+    for (int i = 0; i < dst.length; i++)
+    {
+        if (i < L1.length)
+            dst.data[i] = L1.data[i];
+        else
+            dst.data[i] = L2.data[i - L1.length];
+    }
+    return dst;
+}
+void DelRepeatElemList(SqList *L)
+{
+    for (int i = 0; i < L->length; i++)
+    {
+        for (int u = i + 1; u < L->length; u++)
+        {
+            if (L->data[u] == L->data[i])
+            {
+                for (int t = u; t < L->length - 1; t++)
+                    L->data[t] = L->data[t + 1];
+                L->length--;
+            }
+        }
+    }
 }
