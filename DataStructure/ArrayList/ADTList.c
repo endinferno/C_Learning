@@ -3,97 +3,138 @@
  * @Description: Linear List
  * @Date: 2018-04-08 18:43:42 
  * @Last Modified by: endinferno.DataStructure
- * @Last Modified time: 2018-04-12 00:06:26
+ * @Last Modified time: 2018-04-12 16:57:26
  */
+
 
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
-#define MAXSIZE 20
+#define OVERFLOW 1
+#define MAXSIZE 100
 typedef int ElemType;
 typedef struct
 {
     ElemType data[MAXSIZE];
-    int length;
+    size_t length;
 } SqList;
-typedef size_t Location;
 
 void InitList(SqList *L);
-bool ListEmpty(SqList L);
+size_t LengthList(SqList L);
+bool IsListEmpty(SqList L);
 void ClearList(SqList *L);
-void GetElem(SqList L, Location i, ElemType *e);
-Location LocateElem(SqList L, ElemType e);
-void ListInsert(SqList *L, Location i, ElemType e);
-void ListDelete(SqList *L, Location i, ElemType *e);
-size_t ListLength(SqList L);
+void CreateListFromArray(SqList *L, int *num, int len);
+void TraverseList(SqList L);
+ElemType GetElemList(SqList L, size_t order);
+size_t LocateElemList(SqList L, ElemType elem);
+void InsertElemList(SqList *L, size_t order, ElemType elem);
+ElemType ModifyElemList(SqList *L, size_t order, ElemType elem);
+ElemType DeleteElemList(SqList *L, size_t order);
+void DestroyList(SqList *L);
+SqList CopySqList(SqList L);
 
 void InitList(SqList *L)
 {
     L->length = 0;
+    printf("Init Success.\n");
 }
-
-bool ListEmpty(SqList L)
+size_t LengthList(SqList L)
 {
-    return L.length == 0;
+    return L.length;
 }
-
+bool IsListEmpty(SqList L)
+{
+    return 0 == LengthList(L);
+}
 void ClearList(SqList *L)
 {
     L->length = 0;
 }
-
-void GetElem(SqList L, Location i, ElemType *e)
+void CreateListFromArray(SqList *L, int *num, int len)
 {
-    if (i > L.length || i < 1)
+    if (len > MAXSIZE)
     {
-        fprintf(stderr, "Error: Out of limit.\n");
-        return;
+        fprintf(stderr, "Error: Out of Limit.\n");
+        exit(OVERFLOW);
     }
-    *e = L.data[i - 1];
+    L->length = len;
+    for (int i = 0; i < len; i++)
+    {
+        L->data[i] = num[i];
+    }
 }
-
-Location LocateElem(SqList L, ElemType e)
+void TraverseList(SqList L)
+{
+    for (int i = 0; i < L.length; i++)
+        printf("%d ", L.data[i]);
+    printf("\n");
+}
+ElemType GetElemList(SqList L, size_t order)
+{
+    if (order > L.length)
+    {
+        printf("Error: Out of Limit.\n");
+        exit(OVERFLOW);
+    }
+    return L.data[order - 1];
+}
+size_t LocateElemList(SqList L, ElemType elem)
 {
     for (int i = 0; i < L.length; i++)
     {
-        if (e == L.data[i])
-        {
-            return i;
-        }
+        if (elem == L.data[i])
+            return i + 1;
     }
     return 0;
 }
-
-void ListInsert(SqList *L, Location i, ElemType e)
+void InsertElemList(SqList *L, size_t order, ElemType elem)
 {
-    if (i > L->length || i < 1)
+    if (NULL == L)
     {
-        fprintf(stderr, "Error: Out of limit.\n");
+        fprintf(stderr, "Error: Failed to Insert Elem to NULL.\n");
+        exit(OVERFLOW);
+    }
+    if (order < 0 || order > L->length || L->length > MAXSIZE)
+    {
+        fprintf(stderr, "Error: Out of Limit.\n");
         return;
     }
-    for (int u = L->length; u >= i; u--)
-    {
-        L->data[u] = L->data[u - 1];
-    }
-    L->data[i - 1] = e;
+    for (size_t i = L->length; i > order; i--)
+        L->data[i] = L->data[i - 1];
+    L->data[order] = elem;
     L->length++;
 }
-
-void ListDelete(SqList *L, Location i, ElemType *e)
+ElemType ModifyElemList(SqList *L, size_t order, ElemType elem)
 {
-    if (i > L->length || i < 1)
+    if (order < 1 || order > L->length)
     {
-        fprintf(stderr, "Error: Out of limit.\n");
-        return;
+        fprintf(stderr, "Error: Out of Limit.\n");
+        exit(OVERFLOW);
     }
-    *e = L->data[i - 1];
-    for (int u = i; u < L->length; u++)
-    {
-        L->data[u - 1] = L->data[u];
-    }
+    ElemType value = L->data[order - 1];
+    L->data[order - 1] = elem;
+    return value;
 }
-
-size_t ListLength(SqList L)
+ElemType DeleteElemList(SqList *L, size_t order)
 {
-    return L.length;
+    if (order > L->length || order < 1)
+    {
+        fprintf(stderr, "Error: Out of Limit\n");
+        exit(OVERFLOW);
+    }
+    ElemType value = L->data[order - 1];
+    for (size_t i = order; i < L->length; i++)
+        L->data[i - 1] = L->data[i];
+    L->length--;
+    return value;
+}
+void DestroyList(SqList *L)
+{
+    L->length = 0;
+}
+SqList CopySqList(SqList L)
+{
+    SqList P = L;
+    return P;
 }
