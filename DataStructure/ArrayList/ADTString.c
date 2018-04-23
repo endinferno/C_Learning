@@ -1,4 +1,11 @@
 /*
+ * @Author: endinferno.DataStructure 
+ * @Description: 
+ * @Date: 2018-04-23 14:46:16 
+ * @Last Modified by: endinferno.DataStructure
+ * @Last Modified time: 2018-04-23 15:07:43
+ */
+/*
  * @Author: endinferno.DataStructure
  * @Description: ADTString
  * @Date: 2018-04-11 20:17:10
@@ -11,133 +18,165 @@
 #include <malloc.h>
 #include <stdlib.h>
 
-#define MAXSIZE 40
+#define MAXSIZE 100
 
-typedef int Status;
-typedef int ElemType;
+typedef char ElemType;
 
-typedef char String[MAXSIZE + 1];
+typedef struct
+{
+    ElemType string[MAXSIZE];
+    size_t length;
+} String;
 
-int StrLength(String S);
-bool ClearString(String S);
-bool StringEmpty(String S);
-bool StrCopy(String S, String T);
-bool StrAssign(String T, char *str);
-bool Concat(String T, String S1, String S2);
-int StrCompare(String S, String T);
-void StrPrint(String S);
-bool SubString(String Sub, String S, int pos, int len);
-int Index(String S, String T, int pos);
-bool Replace(String S, String T, String V);
+void InitStr(String *S);
+size_t LengthStr(String S);
+size_t LengthChrArray(char *str);
+bool ClearStr(String *S);
+bool IsEmptyStr(String S);
+bool AssignStr(String *T, char *str);
+void PrintStr(String S);
+void CopyStr(String *dst, String src);
+void ConcatStr(String *T, String S1, String S2);
+int CompareStr(String S, String T);
+String SubStr(String S, size_t pos, size_t len);
+String CreateEmptyStr();
+size_t IndexChr(String S, char c, size_t pos);
+size_t IndexStr(String S, String T, size_t pos);
 
-bool StrAssign(String T, char *str)
+void PrintStr(String S)
+{
+    for (int i = 0; i < S.length; i++)
+        printf("%c", S.string[i]);
+    printf("\n");
+}
+void InitStr(String *S)
+{
+    S->length = 0;
+}
+bool AssignStr(String *T, char *str)
+{
+    if (T == NULL)
+    {
+        fprintf(stderr, "Error: Failed to Read Null.\n");
+        return false;
+    }
+    T->length = LengthChrArray(str);
+    for (int i = 0; i < T->length; i++)
+        T->string[i] = str[i];
+    return true;
+}
+size_t LengthChrArray(char *str)
 {
     int len = 0;
-    while (str[len] != '\0')
-        len++;
-    T[0] = len;
-    for (int i = 1; i <= len; i++)
+    while (str[len++] != '\0')
+        ;
+    return --len;
+}
+size_t LengthStr(String S)
+{
+    return S.length;
+}
+bool ClearStr(String *S)
+{
+    if (S == NULL)
     {
-        T[i] = str[i - 1];
+        fprintf(stderr, "Error: Can not Read Null.\n");
+        return false;
     }
+    S->length = 0;
     return true;
 }
-
-bool StrCopy(String T, String S)
+bool IsEmptyStr(String S)
 {
-    for (int i = 0; i <= S[0]; i++)
-        T[i] = S[i];
-    return true;
+    return 0 == S.length;
 }
-
-bool StringEmpty(String S)
+void CopyStr(String *dst, String src)
 {
-    return 0 == S[0];
+    dst->length = src.length;
+    for (int i = 0; i < dst->length; i++)
+        dst->string[i] = src.string[i];
 }
-
-bool ClearString(String S)
+void ConcatStr(String *T, String S1, String S2)
 {
-    S[0] = 0;
-    return true;
-}
-
-int StrLength(String S)
-{
-    return S[0];
-}
-
-int StrCompare(String S, String T)
-{
-    for (int i = 1; i <= S[0] && i <= T[0]; i++)
+    T->length = S1.length + S2.length;
+    for (int i = 0; i < T->length; i++)
     {
-        if (S[i] > T[i])
+        if (i < S1.length)
+            T->string[i] = S1.string[i];
+        else
+            T->string[i] = S2.string[i - S1.length];
+    }
+}
+int CompareStr(String S, String T)
+{
+    int len = S.length > T.length ? T.length : S.length;
+    for (int i = 0; i < len; i++)
+    {
+        if (S.string[i] > T.string[i])
             return 1;
-        else if (S[i] < T[i])
+        else if (S.string[i] < T.string[i])
             return -1;
         else
             continue;
     }
-    if (S[0] > T[0])
+    if (S.length > T.length)
         return 1;
-    else if (S[0] < T[0])
+    else if (S.length < T.length)
         return -1;
     else
         return 0;
 }
-
-void StrPrint(String S)
+String CreateEmptyStr()
 {
-    for (int i = 1; i <= S[0]; i++)
-    {
-        printf("%c", S[i]);
-    }
-    printf("\n");
+    String S;
+    InitStr(&S);
+    return S;
 }
-
-bool Concat(String T, String S1, String S2)
+String SubStr(String S, size_t pos, size_t len)
 {
-    T[0] = S1[0] + S2[0];
-    for (int i = 1; i <= S1[0]; i++)
-        T[i] = S1[i];
-    for (int i = 1; i <= S2[0]; i++)
-        T[i + S1[0]] = S2[i];
-    return true;
-}
-
-bool SubString(String Sub, String S, int pos, int len)
-{
-    if (pos < 1 || pos > StrLength(S))
+    if (pos + len > S.length + 1)
     {
-        fprintf(stderr, "Error: Out of limit.\n");
-        return false;
+        fprintf(stderr, "Error: Out of Limit.\n");
+        return CreateEmptyStr();
     }
-    if (len < 0 || len > StrLength(S) - pos + 1)
-    {
-        fprintf(stderr, "Error: Out of limit.\n");
-        return false;
-    }
-    Sub[0] = len;
-    for (int i = 1; i <= len; i++)
-        Sub[i] = S[pos + i - 1];
-    return true;
+    String T;
+    T.length = len;
+    for (int i = pos - 1; i < pos + len - 1; i++)
+        T.string[i - pos + 1] = S.string[i];
+    return T;
 }
-
-int Index(String S, String T, int pos)
+size_t IndexChr(String S, char c, size_t pos)
 {
-    if (pos < 1 || StrLength(S) < StrLength(T))
-        return 0;
-    for (int i = pos; i <= S[0] - T[0] + 1; i++)
+    for (int i = pos - 1; i < S.length; i++)
     {
-        int u, o = i;
-        for (u = 1; u <= T[0]; u++)
+        if (S.string[i] == c)
+            return i + 1;
+    }
+    return 0;
+}
+size_t IndexStr(String S, String T, size_t pos)
+{
+    if (pos < 1 || S.length < T.length)
+    {
+        fprintf(stderr, "Error: Out of Limit.\n");
+        exit(1);
+    }
+    for (int i = pos - 1; i <= S.length - T.length; i++)
+    {
+        int u = 0;
+        int t = i;
+        while (u < T.length)
         {
-            if (S[o] == T[u])
-                o++;
+            if (S.string[t] == T.string[u])
+            {
+                t++;
+                u++;
+                if (u == T.length)
+                    return i + 1;
+            }
             else
                 break;
         }
-        if (u - 1 == T[0] && S[i + u - 2] == T[u - 1])
-            return i;
     }
     return 0;
 }
